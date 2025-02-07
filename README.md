@@ -1,4 +1,4 @@
-## URL del pryeceto desplegado:
+# URL del proyecto desplegado:
 
 - [Gestión de ingresos y egresos](http://prueba-vercel-alpha.vercel.app/)
 
