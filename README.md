@@ -7,7 +7,8 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
 
 ## URL del pryecto desplegado:
 
-- prueba-vercel-alpha.vercel.app
+- [Gestión de ingresos y egresos](http://prueba-vercel-alpha.vercel.app/)
+
 
 
 ## Tecnologías y Herramientas Utilizadas
