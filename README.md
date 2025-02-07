@@ -1,15 +1,14 @@
+## URL del pryeceto desplegado:
+
+- [Gestión de ingresos y egresos](http://prueba-vercel-alpha.vercel.app/)
+
+
 # Gestión de Ingresos y Egresos - Fullstack Application
 
 ## Descripción
 
 
 Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y egresos, gestionar usuarios y generar reportes financieros. La aplicación está construida con Next.js, TypeScript, Tailwind CSS y utiliza GraphQL para la comunicación con el backend. Además, implementa control de acceso basado en roles y autenticación con Auth0.
-
-## URL del pryecto desplegado:
-
-- [Gestión de ingresos y egresos](http://prueba-vercel-alpha.vercel.app/)
-
-
 
 ## Tecnologías y Herramientas Utilizadas
 
