@@ -116,8 +116,8 @@ agrega las claves necesarias al archivo para este proyecto
 AUTH0_SECRET=4567576iuyrtrrtry7564556476tryrty65tuyk
 AUTH0_BASE_URL=http://localhost:3000
 AUTH0_ISSUER_BASE_URL=https://prueba-prevalentware.us.auth0.com
-AUTH0_CLIENT_ID=9BdcgvXCQEncyBLUedECCMK9ALAKiIwL
-AUTH0_CLIENT_SECRET=NLzF_UiGjxJL6xsSKX0M-O-_orhPGJFltIkiFvqAjmSCeRivP_hfIjtOZ8mbX2Pr
+AUTH0_CLIENT_ID=e91XZQbeFTbl6Eq2Cdm4gdnBWbNZIQam
+AUTH0_CLIENT_SECRET=G45BHvnvuab2SMt8mt4i7aPNDowhHBQeGkdPyTmdxTZOkUsBbsHMeRgbRU1-an8m
 
 AUTH_SECRET="" # Added by `npx auth`. Read more: https://cli.authjs.dev
 
