@@ -106,7 +106,7 @@ El proyecto utiliza variables de entorno definidas en un archivo .env.local.
 Para generar una clave aleatoria y crear el archivo:
 
 ```bash
- npx auth
+ npx auth secret
 ```
 agrega las claves necesarias al archivo para este proyecto
 
