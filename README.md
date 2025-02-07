@@ -37,12 +37,12 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
 
 ### Páginas Principales
 
-1. **Home:** Página de inicio con un menú que permite acceder a tres secciones:
+  **Home:** Página de inicio con un menú que permite acceder a tres secciones:
    - Sistema de gestión de ingresos y egresos.
    - Gestión de usuarios (solo para administradores).
    - Reportes (solo para administradores).
 
-2. **Sistema de Gestión de Ingresos y Gastos:**
+**Sistema de Gestión de Ingresos y Gastos:**
    - Vista de ingresos y egresos con una tabla que muestra:
      - Concepto
      - Monto
@@ -54,7 +54,7 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
      - Concepto
      - Fecha
 
-3. **Gestión de Usuarios (solo para administradores):**
+**Gestión de Usuarios (solo para administradores):**
    - Vista con una tabla de usuarios que incluye:
      - Nombre
      - Correo
@@ -65,7 +65,7 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
      - Rol
      - Botón para guardar cambios
 
-4. **Reportes (solo para administradores):**
+**Reportes (solo para administradores):**
    - Gráfico de movimientos financieros.
    - Saldo actual.
    - Opción para descargar el reporte en formato CSV.
@@ -76,4 +76,107 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
 ### Autenticación
 - Autenticación de usuarios utilizando Auth0 y sesiones de base de datos con Prisma.
 
-## Instrucciones para Ejecutar el Proyecto Localmente
+
+---
+
+
+# Instrucciones para Ejecutar el proyecto localmente
+
+
+
+## 1. Clonar el Repositorio
+
+Abre una terminal y ejecuta:
+
+```bash
+git clone https://github.com/datanilo/prevalentWare.git
+cd prevalentWare
+```
+
+## 2. Instalar las Dependencias
+
+```bash
+npm install
+```
+
+
+## 3. Configurar el Archivo de Entorno
+
+El proyecto utiliza variables de entorno definidas en un archivo .env.local.
+
+Para generar una clave aleatoria y crear el archivo:
+
+```bash
+ npx auth
+```
+agrega las claves necesarias al archivo para este proyecto
+
+```ini
+# Archivo: .env.local
+
+AUTH0_SECRET=4567576iuyrtrrtry7564556476tryrty65tuyk
+AUTH0_BASE_URL=http://localhost:3000
+AUTH0_ISSUER_BASE_URL=https://prueba-prevalentware.us.auth0.com
+AUTH0_CLIENT_ID=9BdcgvXCQEncyBLUedECCMK9ALAKiIwL
+AUTH0_CLIENT_SECRET=NLzF_UiGjxJL6xsSKX0M-O-_orhPGJFltIkiFvqAjmSCeRivP_hfIjtOZ8mbX2Pr
+
+AUTH_SECRET="" # Added by `npx auth`. Read more: https://cli.authjs.dev
+
+DATABASE_URL=postgresql://postgres.rtvlfjrlsiqlmpushnio:prevalentWare@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
+```
+
+## 4. Ejecutar el Cliente de Prisma
+
+Para generar el cliente de Prisma, ejecuta:
+
+```bash
+npx prisma generate
+```
+
+## 5. Iniciar el Proyecto
+
+Con todo configurado, inicia la aplicación:
+
+```bash
+npm run dev
+```
+
+---
+
+# Despliegue en Vercel
+
+
+ inicia sesión en Vercel
+
+```bash
+vercel login
+```
+
+Conecta el Proyecto a Vercel
+```bash
+vercel
+```
+
+Agrega las variables de Entorno
+```bash
+vercel env add AUTH0_SECRET production
+vercel env add AUTH0_BASE_URL production
+vercel env add AUTH0_ISSUER_BASE_URL production
+vercel env add AUTH0_CLIENT_ID production
+vercel env add AUTH0_CLIENT_SECRET production
+vercel env add AUTH_SECRET production
+vercel env add DATABASE_URL production
+```
+
+verifica que las variables fueron añadidas correctamente:
+
+```bash
+vercel env ls
+```
+
+Una vez que el proyecto esté configurado y las variables de entorno hayan sido agregadas, realiza el despliegue a producción ejecutando:
+
+```bash
+vercel --prod
+```
+

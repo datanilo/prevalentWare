@@ -7,9 +7,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     Auth0({
-    clientId: process.env.AUTH_AUTH0_ID,
-    clientSecret: process.env.AUTH_AUTH0_SECRET,
-    issuer: process.env.AUTH_AUTH0_ISSUER,
+    clientId: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    issuer: process.env.AUTH0_ISSUER_BASE_URL,
     })
   ],
   session: {

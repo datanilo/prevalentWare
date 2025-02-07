@@ -5,7 +5,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { gql } from 'graphql-tag';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth'; // Importa tu middleware de autenticación
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Definición del esquema GraphQL
 const typeDefs = gql`
@@ -128,8 +128,9 @@ const resolvers = {
   },
 };
 
+
 // Crea el esquema ejecutable de GraphQL
-export const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 // Inicializa el ApolloServer con el esquema
 const server = new ApolloServer({ schema });
@@ -137,16 +138,9 @@ const server = new ApolloServer({ schema });
 // Crea el handler de Next.js para Apollo Server
 const nextHandler = startServerAndCreateNextHandler(server);
 
-/**
- * Exporta el handler para el método GET.
- * Utilizamos la función auth para proteger el endpoint.
- * La función callback de auth recibe dos parámetros:
- * - req: objeto de tipo NextRequest.
- * - ctx: el contexto del handler (AppRouteHandlerFnContext).
- */
-export const GET = auth(async (req: NextRequest, ctx) => {
-  // Verifica si el usuario está autenticado
-  if (!(req as any).auth) {
+
+export const GET = auth(async (req) => {
+  if (!req.auth) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
   return nextHandler(req);
@@ -156,9 +150,8 @@ export const GET = auth(async (req: NextRequest, ctx) => {
  * Exporta el handler para el método POST.
  * Se protege el endpoint de la misma forma que el GET.
  */
-export const POST = auth(async (req: NextRequest, ctx) => {
-  // Verifica si el usuario está autenticado
-  if (!(req as any).auth) {
+export const POST = auth(async (req) => {
+  if (!req.auth) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
   return nextHandler(req);

@@ -1,3 +1,5 @@
+import 'next/server';
+
 declare module "next-auth" {
     /**
      * The shape of the user object returned in the OAuth providers' `profile` callback,
@@ -21,6 +23,13 @@ declare module "next-auth" {
         } & DefaultSession["user"];
       }
   }
+
+  declare module 'next/server' {
+    interface NextRequest {
+      auth?: boolean; 
+    }
+  }
+
    
   // The `JWT` interface can be found in the `next-auth/jwt` submodule
   import { JWT } from "next-auth/jwt"
@@ -32,3 +41,5 @@ declare module "next-auth" {
       idToken?: string
     }
   }
+
+  
