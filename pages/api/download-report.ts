@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { gql } from '@apollo/client';
-import client from '@/lib/apolloClient'; // Aquí importamos el Apollo Client que ya tienes configurado
-
+import client from '@/lib/apolloClient';
 // Se define la consulta GET_MOVEMENTS directamente aquí
 const GET_MOVEMENTS = gql`
   query GetMovements {

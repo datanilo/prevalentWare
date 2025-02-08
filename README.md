@@ -1,14 +1,13 @@
 # URL del proyecto desplegado:
 
-- [Gestión de ingresos y egresos](http://prueba-vercel-alpha.vercel.app/)
-
+- [Gestión de ingresos y egresos](http:///)
 
 # Gestión de Ingresos y Egresos - Fullstack Application
 
 ## Descripción
 
 
-Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y egresos, gestionar usuarios y generar reportes financieros. La aplicación está construida con Next.js, TypeScript, Tailwind CSS y utiliza GraphQL para la comunicación con el backend. Además, implementa control de acceso basado en roles y autenticación con Auth0.
+Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y egresos, gestionar usuarios y generar reportes financieros. La aplicación está construida con Next.js, TypeScript, Tailwind CSS y utiliza GraphQL para la comunicación con el backend e implementa control de acceso basado en roles y autenticación con Auth0.
 
 ## Tecnologías y Herramientas Utilizadas
 
@@ -29,10 +28,15 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
 
 ## Funcionalidades
 
-### Roles y Permisos
+### Roles y Permisos (control de acceso basado en roles RBAC)
 
-- **Usuario:** Solo puede acceder a la gestión de movimientos (ingresos y egresos).
+- **Usuario registrado:** Solo puede acceder a la gestión de movimientos (ingresos y egresos) pero no puede ni agregar ni eliminar movimientos.
 - **Administrador:** Puede ver los reportes, editar usuarios y agregar movimientos.
+
+- **Usuario no registrado:** Puede acceder solo al index.
+
+
+##### Todos los usuarios al registrarse adquieren el rol de ADMIN, este se puede cambiar en la gestión de usuarios.
 
 ### Páginas Principales
 
@@ -48,6 +52,7 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
      - Fecha
      - Usuario
    - Botón para agregar nuevos movimientos (solo para administradores).
+   - Botón para Eliminar movimientos seleccionados (solo para administradores).
    - Formulario para agregar un nuevo ingreso o egreso con los siguientes campos:
      - Monto
      - Concepto
@@ -113,15 +118,13 @@ agrega las claves necesarias al archivo para este proyecto
 ```ini
 # Archivo: .env.local
 
-AUTH0_SECRET=4567576iuyrtrrtry7564556476tryrty65tuyk
+AUTH0_SECRET="ya generada" # Added by `npx auth`. Read more: https://cli.authjs.dev
 AUTH0_BASE_URL=http://localhost:3000
-AUTH0_ISSUER_BASE_URL=https://prueba-prevalentware.us.auth0.com
-AUTH0_CLIENT_ID=e91XZQbeFTbl6Eq2Cdm4gdnBWbNZIQam
-AUTH0_CLIENT_SECRET=G45BHvnvuab2SMt8mt4i7aPNDowhHBQeGkdPyTmdxTZOkUsBbsHMeRgbRU1-an8m
+AUTH0_ISSUER_BASE_URL="obtener de Auth0"
+AUTH0_CLIENT_ID="obtener de Auth0"
+AUTH0_CLIENT_SECRET="obtener de Auth0"
 
-AUTH_SECRET="" # Added by `npx auth`. Read more: https://cli.authjs.dev
-
-DATABASE_URL=postgresql://postgres.rtvlfjrlsiqlmpushnio:prevalentWare@aws-0-sa-east-1.pooler.supabase.com:5432/postgres
+DATABASE_URL="obtenida de Supabase"
 ```
 
 ## 4. Ejecutar el Cliente de Prisma
@@ -139,7 +142,16 @@ Con todo configurado, inicia la aplicación:
 ```bash
 npm run dev
 ```
+esto para un entorno de desarrollo, si quieres un entorno de produccion de Next, entonces ejecuta 
 
+```bash
+npm run build
+```
+
+seguido de 
+```bash
+npm run start
+```
 ---
 
 # Despliegue en Vercel
@@ -179,3 +191,56 @@ Una vez que el proyecto esté configurado y las variables de entorno hayan sido 
 vercel --prod
 ```
 
+
+---
+## Descripción de las Pruebas
+
+Se realizan tres pruebas a la API GraphQL, cada una enfocada en una mutación específica. Estas pruebas se ejecutan de forma aislada utilizando mocks para simular las operaciones de la base de datos (Prisma), sin depender de un entorno real. Las pruebas se realizan utilizando **Jest** y **Babel**.
+
+### Tecnologías Utilizadas
+
+- **GraphQL:**  
+  Se define el esquema (typeDefs) y los resolvers que implementan la lógica de la API.
+  
+- **Apollo Server:**  
+  Se utiliza executeOperation() para enviar queries o mutaciones directamente al servidor Apollo sin necesidad de una conexión HTTP real.
+
+- **Jest:**  
+  Framework de testing que se usa para ejecutar las pruebas de integración y unitarias.
+
+- **Babel:**  
+  Herramienta de transformación que permite usar sintaxis moderna de JavaScript/TypeScript durante la ejecución de las pruebas.
+
+- **Prisma (mock):**  
+  En las pruebas, sus métodos se mockean (usando `jest.mock`) para aislar la lógica de los resolvers y evitar depender de una base de datos real.
+
+### Detalle de las Pruebas
+
+**Test `addMovement`**  
+   - **Objetivo:**  
+     Verificar que se pueda agregar un nuevo movimiento.
+   - **Verificaciones:**  
+     - La respuesta de la mutación retorna el movimiento creado con todos los campos esperados.
+     - Se comprueba que el método `prisma.movement.create` se invoque una vez y con los parámetros correctos.
+
+**Test `deleteMovements`**  
+   - **Objetivo:**  
+     Validar que se eliminen los movimientos indicados y se retornen los movimientos eliminados.
+   - **Verificaciones:**  
+     - La respuesta de la mutación no contiene errores y tiene el formato esperado.
+     - Se verifica que los métodos `prisma.movement.findMany` y `prisma.movement.deleteMany` se hayan llamado con los parámetros correctos.
+
+**Test `updateUser`**  
+   - **Objetivo:**  
+     Confirmar que se actualicen correctamente los campos `name`, `role` y `phone` de un usuario.
+   - **Verificaciones:**  
+     - La respuesta de la mutación retorna el usuario actualizado, y mostrando los nuevos valores para `name`, `role` y `phone`.
+     - Se comprueba que el método `prisma.user.update` se invoque exactamente una vez y con el objeto adecuado.
+
+---
+
+Para ejecutar las pruebas, ejecuta el comando:
+
+```bash
+npm run test
+```
