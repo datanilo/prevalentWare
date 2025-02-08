@@ -1,6 +1,6 @@
 # URL del proyecto desplegado:
 
-- [Gestión de ingresos y egresos](http:///)
+- [Gestión de ingresos y egresos](https://prevalent-ware-omega.vercel.app/)
 
 # Gestión de Ingresos y Egresos - Fullstack Application
 
@@ -36,7 +36,7 @@ Este proyecto es una aplicación fullstack diseñada para gestionar ingresos y e
 - **Usuario no registrado:** Puede acceder solo al index.
 
 
-##### Todos los usuarios al registrarse adquieren el rol de ADMIN, este se puede cambiar en la gestión de usuarios.
+#### Todos los usuarios al registrarse adquieren el rol de ADMIN, este se puede cambiar en la gestión de usuarios.
 
 ### Páginas Principales
 
