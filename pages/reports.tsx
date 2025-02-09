@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { generateCSV } from '@/utils/generateCSV';
 
-// Query que obtiene el reporte financiero
 const GET_FINANCIAL_REPORT = gql`
   query GetFinancialReport {
     financialReport {
@@ -29,10 +28,8 @@ const Reports = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // Ejecutar la consulta inmediatamente para que no haya retrasos
   const { data, loading, error } = useQuery(GET_FINANCIAL_REPORT);
 
-  // Verifica que el usuario esté autenticado y sea ADMIN o USER.
   useEffect(() => {
     if (status === "loading") return;
     if (!session || session.user.role !== "ADMIN") {
@@ -40,8 +37,6 @@ const Reports = () => {
     }
   }, [session, status, router]);
 
-
-  // Configuración del gráfico
   const chartConfig = {
     total: {
       label: "Movimientos",
@@ -51,9 +46,8 @@ const Reports = () => {
 
   const { currentBalance, monthlyMovements } = data?.financialReport ?? {};
 
-  // Función para manejar la descarga del CSV
   const handleDownloadCSV = () => {
-    generateCSV(data); // Usa la función de generación del CSV
+    generateCSV(data);
   };
 
   return (
