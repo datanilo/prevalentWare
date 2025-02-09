@@ -41,39 +41,24 @@ interface Movement {
   };
 }
 
-/**
- * Componente que muestra la tabla de movimientos.
- * Se utiliza el componente Skeleton de shadcn para mostrar un placeholder mientras se cargan los datos.
- * Si el usuario autenticado es ADMIN, se muestran los botones para crear y eliminar movimientos,
- * así como la columna de selección.
- */
-
 const MovementsTable = () => {
-  // Hook para manejar la sesión del usuario
+
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
 
-  // Estado para mostrar el formulario de nuevo movimiento (sólo para ADMIN)
   const [showForm, setShowForm] = useState(false);
-  // Estado para gestionar la selección de movimientos (por ID)
   const [selectedMovements, setSelectedMovements] = useState<string[]>([]);
 
-  // Consulta para obtener los movimientos
   const { data, loading, refetch } = useQuery(GET_MOVEMENTS);
 
-  // Mutación para eliminar movimientos
   const [deleteMovements, { loading: deleting, error: deleteError }] =
     useMutation(DELETE_MOVEMENTS, {
       onCompleted: () => {
-        // Al eliminar, se limpia la selección y se refrescan los datos
         setSelectedMovements([]);
         refetch();
       },
     });
 
-  /**
-   * Maneja la eliminación de movimientos seleccionados.
-   */
   const handleDelete = async () => {
     if (selectedMovements.length === 0) return;
     try {
@@ -85,20 +70,15 @@ const MovementsTable = () => {
     }
   };
 
-  // Array de movimientos (o array vacío si aún no se cargaron)
   const movements: Movement[] = data?.movements || [];
 
-  // Calcular el total de los movimientos
   const totalAmount = movements.reduce((sum, movement) => sum + movement.amount, 0);
 
-  // Determina si todos los movimientos están seleccionados
   const isAllSelected =
     movements.length > 0 &&
     movements.every((movement) => selectedMovements.includes(movement.id));
 
-  /**
-   * Selecciona o deselecciona todos los movimientos.
-   */
+
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       const allIds = movements.map((movement) => movement.id);
@@ -108,11 +88,6 @@ const MovementsTable = () => {
     }
   };
 
-  /**
-   * Maneja la selección individual de un movimiento.
-   * @param e Evento del checkbox
-   * @param id ID del movimiento a seleccionar/deseleccionar
-   */
   const handleSelect = (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -126,7 +101,6 @@ const MovementsTable = () => {
     }
   };
 
-  // Mientras se cargan los datos, se muestra un placeholder con Skeleton
   if (loading) {
     return (
       <Table>
@@ -178,7 +152,6 @@ const MovementsTable = () => {
     );
   }
 
-  // Si se está mostrando el formulario, se renderiza en lugar de la tabla
   if (showForm) {
     return (
       <div className="w-full flex flex-col items-center">
